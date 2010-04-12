@@ -46,7 +46,7 @@ namespace :ritual do
   end
 
   task :push_gem do
-    sh "gem push #{library_name}-#{version}"
+    sh "gem push #{library_name}-#{version}.gem"
   end
 end
 
