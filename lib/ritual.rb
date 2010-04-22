@@ -1,5 +1,8 @@
 require 'fileutils'
 
+desc "Build and install the gem."
+task :install => %w'ritual:build ritual:install_gem'
+
 desc "Select a major version bump."
 task :major do
   Ritual.component = 0
@@ -47,6 +50,10 @@ namespace :ritual do
 
   task :push_gem do
     sh "gem push #{library_name}-#{version}.gem"
+  end
+
+  task :install_gem do
+    sh "gem install #{library_name}-#{version}.gem"
   end
 end
 
