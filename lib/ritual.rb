@@ -18,7 +18,7 @@ task :patch do
   Ritual.component = 2
 end
 
-desc "Bump the patch version and do the release ritual."
+desc "Bump the selected version component and do the release ritual."
 task :release => %w'ritual:check_release_args ritual:bump ritual:tag ritual:push ritual:build ritual:push_gem'
 
 # Private helper tasks.
