@@ -1,3 +1,4 @@
+require 'date'
 require 'fileutils'
 
 desc "Build and install the gem."
@@ -30,9 +31,10 @@ namespace :ritual do
 
   task :bump do
     version.increment(Ritual.component)
+    changelog.set_latest_version(version)
     version.write
-    sh "git add #{version.path}"
-    sh "git commit #{version.path} -m 'Bump to version #{version}.'"
+    sh "git add #{version.path} #{changelog.path}"
+    sh "git commit #{version.path} #{changelog.path} -m 'Bump to version #{version}.'"
     puts "Bumped to version #{version}."
   end
 
@@ -86,22 +88,32 @@ module Ritual
     attr_reader :value, :library_name
 
     def to_s
-      value.join('.')
+      value.to_s
     end
 
     def read
-      if File.exist?(path)
-        load path
-        self.module::VERSION
-      else
-        self.module.const_set(:VERSION, [0, 0, 0])
-      end
+      File.exist?(path) or
+        write([0, 0, 0])
+      load path
+      self.module::VERSION
     end
 
-    def write
+    def write(value=self.value)
       FileUtils.mkdir_p File.dirname(path)
       open(path, 'w') do |file|
-        file.puts "module #{module_name}\n  VERSION = #{value.inspect}\nend"
+        file.puts <<-EOS.gsub(/^ *\|/, '')
+          |module #{module_name}
+          |  VERSION = #{value.inspect}
+          |
+          |  class << VERSION
+          |    include Comparable
+          |
+          |    def to_s
+          |      join('.')
+          |    end
+          |  end
+          |end
+        EOS
       end
     end
 
@@ -124,6 +136,22 @@ module Ritual
       Object.const_get(module_name)
     end
   end
+
+  class Changelog
+    def path
+      'CHANGELOG'
+    end
+
+    def set_latest_version(version)
+      File.exist?(path) or
+        raise "Don't release without a CHANGELOG!"
+      text = File.read(path)
+      heading = "#{version} #{Date.today.strftime('%Y-%m-%d')}"
+      text.sub!(/^(== )LATEST$/i, "\\1#{heading}") or
+        raise "No LATEST entry in CHANGELOG - did you forget to update it?"
+      open(path, 'w'){|f| f.print text}
+    end
+  end
 end
 
 #
@@ -136,6 +164,10 @@ end
 
 def version
   @version ||= Ritual::Version.new(library_name)
+end
+
+def changelog
+  @changelog ||= Ritual::Changelog.new
 end
 
 def spec_task(*args, &block)

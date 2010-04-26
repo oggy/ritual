@@ -1,3 +1,8 @@
+== LATEST
+
+ * Set version in CHANGELOG when bumping version.
+ * Make VERSION objects comparable, and make them print nicely.
+
 == 0.0.3 2010-04-22
 
  * Add install task.
