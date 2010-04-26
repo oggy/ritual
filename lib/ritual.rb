@@ -1,7 +1,7 @@
 require 'fileutils'
 
 desc "Build and install the gem."
-task :install => %w'ritual:build ritual:install_gem'
+task :install => %w'ritual:build_gem ritual:install_gem'
 
 desc "Select a major version bump."
 task :major do
@@ -19,7 +19,7 @@ task :patch do
 end
 
 desc "Bump the selected version component and do the release ritual."
-task :release => %w'ritual:check_release_args ritual:bump ritual:tag ritual:push ritual:build ritual:push_gem'
+task :release => %w'ritual:check_release_args ritual:bump ritual:tag ritual:push ritual:build_gem ritual:push_gem'
 
 # Private helper tasks.
 namespace :ritual do
@@ -44,7 +44,7 @@ namespace :ritual do
     sh "git push origin master"
   end
 
-  task :build do
+  task :build_gem do
     sh "gem build #{library_name}.gemspec"
   end
 
