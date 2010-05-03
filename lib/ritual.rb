@@ -118,6 +118,7 @@ module Ritual
     end
 
     def increment(component)
+      (value.size..component).each{|i| value[i] = 0}
       value[component] += 1
       (component+1 ... value.size).each{|i| value[i] = 0}
     end

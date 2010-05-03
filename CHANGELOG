@@ -1,3 +1,7 @@
+== LATEST
+
+ * Support more than 3 version components via version.increment(n).
+
 == 0.0.4 2010-04-26
 
  * Set version in CHANGELOG when bumping version.
