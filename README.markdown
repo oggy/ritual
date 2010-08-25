@@ -19,8 +19,10 @@ In `Rakefile`:
 
 Adds some shortcuts:
 
- * `spec_task(*args, &block)`: Define a spec task. Noop if RSpec cannot be
-   loaded.
+ * `cucumber_task(*args, &block)`: Define a Cucumber task. Noop if
+   Cucumber cannot be loaded.
+ * `spec_task(*args, &block)`: Define an RSpec task. Noop if RSpec
+   cannot be loaded.
  * `rdoc_task(*args, &block)`: Define an rdoc task.
 
 And some tasks:

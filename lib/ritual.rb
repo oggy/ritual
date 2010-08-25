@@ -177,6 +177,12 @@ def spec_task(*args, &block)
 rescue LoadError
 end
 
+def cucumber_task(*args, &block)
+  require 'cucumber/rake/task'
+  Cucumber::Rake::Task.new(*args, &block)
+rescue LoadError
+end
+
 def rdoc_task(*args, &block)
   require 'rake/rdoctask'
   Rake::RDocTask.new(*args, &block)
