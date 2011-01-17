@@ -27,3 +27,10 @@ Feature: Releasing
   Scenario: Releasing a minor version of a gem
     When I run "rake major release"
     Then the version should be "2.0.0"
+
+  Scenario: Failing to specify a component to bump
+    When I try to run "rake release"
+    Then it should output "Please select a version component to bump"
+    And it should not run any commands
+    And the version should be "1.2.3"
+    And the latest changelog version should be "1.2.3"
