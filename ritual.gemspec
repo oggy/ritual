@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
     |lightweight manner.
   EOS
 
+  s.add_dependency 'rake'
   s.required_rubygems_version = ">= 1.3.6"
   s.files = Dir["lib/**/*"] + %w(LICENSE README.markdown Rakefile CHANGELOG)
   s.require_path = 'lib'
