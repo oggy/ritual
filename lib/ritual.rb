@@ -2,9 +2,6 @@ require 'date'
 require 'fileutils'
 require 'ritual/lib'
 
-desc "Build and install the gem."
-task :install => %w'ritual:build_gem ritual:install_gem'
-
 desc "Select a major version bump."
 task :major do
   Ritual.component = 0
@@ -21,16 +18,13 @@ task :patch do
 end
 
 desc "Bump the selected version component and do the release ritual."
-task :release => %w'ritual:check_release_args ritual:bump ritual:tag ritual:push ritual:build_gem ritual:push_gem'
+task :release => %w'repo:bump repo:tag repo:push gem:build gem:push'
 
-# Private helper tasks.
-namespace :ritual do
-  task :check_release_args do
+namespace :repo do
+  desc "Bump and commit the version file and changelog."
+  task :bump do
     Ritual.component or
       raise "Please select a version component to bump, e.g.: rake patch release"
-  end
-
-  task :bump do
     version.increment(Ritual.component)
     changelog.set_latest_version(version)
     version.write
@@ -39,23 +33,30 @@ namespace :ritual do
     puts "Bumped to version #{version}."
   end
 
+  desc "Tag the release with the current version."
   task :tag do
     sh "git tag v#{version}"
   end
 
+  desc "Push updates upstream."
   task :push do
     sh "git push origin master"
   end
+end
 
-  task :build_gem do
+namespace :gem do
+  desc "Build the gem."
+  task :build do
     sh "gem build #{library_name}.gemspec"
   end
 
-  task :push_gem do
+  desc "Push the gem to the gem server."
+  task :push do
     sh "gem push #{library_name}-#{version}.gem"
   end
 
-  task :install_gem do
+  desc "Install the gem. May require running with sudo."
+  task :install => :build do
     sh "gem install #{library_name}-#{version}.gem"
   end
 end
@@ -89,6 +90,16 @@ def rdoc_task(*args, &block)
   Rake::RDocTask.new(*args, &block)
 end
 
+def remove_task(name)
+  Rake.application.instance_variable_get(:@tasks).delete(name) or
+    raise ArgumentError, "task not found: #{name}"
+end
+
+def replace_task(name, *args, &block)
+  remove_task name
+  task(name, *args, &block)
+end
+
 module Ritual
   class << self
     attr_accessor :component
@@ -109,12 +120,11 @@ module Ritual
     end
 
     def version_file
-      path = "lib/#{library_name}/version.rb"
-      VersionFile.new(path, library_name)
+      @version ||= VersionFile.new("lib/#{library_name}/version.rb", library_name)
     end
 
     def changelog
-      Changelog.new('CHANGELOG')
+      @changelog ||= Changelog.new('CHANGELOG')
     end
   end
 end

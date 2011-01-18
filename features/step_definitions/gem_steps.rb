@@ -44,8 +44,8 @@ Given /^I have a gem "(.*?)" at version "(.*?)"$/ do |name, version|
   EOS
 end
 
-Given /^I have a Rakefile containing:$/ do |content|
-  make_file 'Rakefile', content
+Given /^"(.*?)" contains:$/ do |file_name, content|
+  make_file file_name, content
 end
 
 Then /^the version should be "(.*?)"$/ do |version|

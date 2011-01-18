@@ -59,6 +59,11 @@ module RitualWorld
   def camelize(string)
     string.gsub(/(?:\A|_)(.)/){$1.upcase}
   end
+
+  def commands_run
+    path = 'commands.log'
+    File.exist?(path) ? File.readlines(path) : []
+  end
 end
 
 World RitualWorld

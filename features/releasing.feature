@@ -1,14 +1,14 @@
 Feature: Releasing
   Background:
     Given I have a gem "my_gem" at version "1.2.3"
-    And I have a Rakefile containing:
+    And "Rakefile" contains:
       """
       require 'ritual'
       """
 
   Scenario: Releasing a patch version of a gem
     When I run "rake patch release"
-    Then it should run:
+    Then it should run exactly:
       """
       git add lib/my_gem/version.rb CHANGELOG
       git commit lib/my_gem/version.rb CHANGELOG -m 'Bump to version 1.2.4.'

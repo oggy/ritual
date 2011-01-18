@@ -21,15 +21,29 @@ Then /^it should output "(.*?)"$/ do |output|
   @output.should include(output)
 end
 
-Then /^it should run:/ do |commands|
+Then /^it should run exactly:/ do |commands|
   # Massage quotes out of commands, as we can't test these.
   commands = commands.map do |command|
     words = Shellwords.shellwords(command)
     words.join(' ') << "\n"
   end.join
+  commands_run.join.should == commands
+end
 
-  FileUtils.touch 'commands.log'
-  File.read('commands.log').should == commands
+Then /^it should run "(.*?)"$/ do |command|
+  found = commands_run.any? do |line|
+    command == line.chomp
+  end
+  found or
+    raise "Command not run: #{command}\nCommands run:\n#{commands_run.join.gsub(/^/, '  ')}"
+end
+
+Then /^it should not run "(.*?)"$/ do |command|
+  found = commands_run.any? do |line|
+    command == line.chomp
+  end
+  found and
+    raise "Command run: #{command}\nCommands run:\n#{commands_run.join.gsub(/^/, '  ')}"
 end
 
 Then /^it should not run any commands$/ do
