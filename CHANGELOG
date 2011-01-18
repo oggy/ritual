@@ -1,3 +1,8 @@
+== LATEST
+
+ * Subtasks are now public, and namespaced under repo: and gem:.
+ * Add remove_task and replace_task, for customizing the subtasks.
+
 == 0.0.5 2010-08-25
 
  * Support more than 3 version components via version.increment(n).
