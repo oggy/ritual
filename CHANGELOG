@@ -1,4 +1,4 @@
-== LATEST
+== 0.1.0 2011-01-17
 
  * Subtasks are now public, and namespaced under repo: and gem:.
  * Add remove_task and replace_task, for customizing the subtasks.

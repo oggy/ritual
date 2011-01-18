@@ -1,5 +1,5 @@
 module Ritual
-  VERSION = [0, 0, 5]
+  VERSION = [0, 1, 0]
 
   class << VERSION
     include Comparable
