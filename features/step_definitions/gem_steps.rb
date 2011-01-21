@@ -63,3 +63,7 @@ Then /^the latest changelog version should be "(.*?)"$/ do |version|
   File.read('CHANGELOG') =~ /^== (\S+) /
   $1.should == version
 end
+
+Then /^"(.*?)" should contain:$/ do |file_name, content|
+  File.read(file_name).chomp.should == content.chomp
+end

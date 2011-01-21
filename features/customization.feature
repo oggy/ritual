@@ -97,3 +97,25 @@ Feature: Customization
       """
     When I try to run "rake install"
     Then it should output "task not found: wrong"
+
+  Scenario: Customizing the version file
+    Given I have a gem "mygem" at version "1.2.3"
+    And "Rakefile" contains:
+      """
+      require 'ritual'
+      """
+    And "lib/mygem/version.rb" contains:
+      """
+      module Mygem
+        VERSION=[1,2,3]
+        CUSTOM_STUFF_HERE
+      end
+      """
+    When I run "rake patch repo:bump"
+    Then "lib/mygem/version.rb" should contain:
+      """
+      module Mygem
+        VERSION = [1, 2, 4]
+        CUSTOM_STUFF_HERE
+      end
+      """

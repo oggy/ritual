@@ -1,3 +1,8 @@
+== LATEST
+
+ * Support custom code in version file. Only the "VERSION =" line is
+   updated on bump.
+
 == 0.1.0 2011-01-17
 
  * Subtasks are now public, and namespaced under repo: and gem:.

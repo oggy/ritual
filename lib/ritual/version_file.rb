@@ -1,5 +1,7 @@
 module Ritual
   class VersionFile
+    VERSION_REGEXP = /^\s*VERSION\s*=\s*(\[.*?\])/
+
     def initialize(path, library_name)
       @path = path
       @library_name = library_name
@@ -13,21 +15,28 @@ module Ritual
     end
 
     def write
-      FileUtils.mkdir_p File.dirname(path)
-      open(path, 'w') do |file|
-        file.puts <<-EOS.gsub(/^ *\|/, '')
-          |module #{module_name}
-          |  VERSION = #{value.inspect}
-          |
-          |  class << VERSION
-          |    include Comparable
-          |
-          |    def to_s
-          |      join('.')
-          |    end
-          |  end
-          |end
-        EOS
+      if File.exist?(path)
+        source = File.read(path).sub(VERSION_REGEXP) do |s|
+          "#{s[/\s*/]}VERSION = [#{@value.join(', ')}]"
+        end
+        open(path, 'w') { |f| f.puts source}
+      else
+        FileUtils.mkdir_p File.dirname(path)
+        open(path, 'w') do |file|
+          file.puts <<-EOS.gsub(/^ *\|/, '')
+            |module #{module_name}
+            |  VERSION = #{value.inspect}
+            |
+            |  class << VERSION
+            |    include Comparable
+            |
+            |    def to_s
+            |      join('.')
+            |    end
+            |  end
+            |end
+          EOS
+        end
       end
     end
 
@@ -41,7 +50,7 @@ module Ritual
 
     def read
       if File.exist?(path)
-        File.read(path) =~ /^\s*VERSION\s*=\s*(\[.*?\])/ and
+        File.read(path) =~ VERSION_REGEXP and
           eval $1
       else
         [0, 0, 0]

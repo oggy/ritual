@@ -36,11 +36,12 @@ describe Ritual::VersionFile do
     end
 
     describe "#write" do
-      it "should create the version file at version [0, 0, 0]" do
+      it "should create the version file with the current version if it does not yet exist" do
+        @version_file.increment(2)
         @version_file.write
         File.read("#{TMP}/version.rb").should == <<-EOS.gsub(/^ *\|/, '')
           |module MyGem
-          |  VERSION = [0, 0, 0]
+          |  VERSION = [0, 0, 1]
           |
           |  class << VERSION
           |    include Comparable
@@ -68,6 +69,8 @@ describe Ritual::VersionFile do
         |      join('.')
         |    end
         |  end
+        |
+        |  # Custom code.
         |end
       EOS
       @version_file = Ritual::VersionFile.new("#{TMP}/version.rb", 'MyGem')
@@ -103,12 +106,12 @@ describe Ritual::VersionFile do
     end
 
     describe "#write" do
-      it "should update the version file at the current version" do
-        File.delete "#{TMP}/version.rb"
+      it "should update the version in the file to the current version" do
+        @version_file.increment(2)
         @version_file.write
         File.read("#{TMP}/version.rb").should == <<-EOS.gsub(/^ *\|/, '')
           |module MyGem
-          |  VERSION = [1, 2, 3]
+          |  VERSION = [1, 2, 4]
           |
           |  class << VERSION
           |    include Comparable
@@ -117,6 +120,8 @@ describe Ritual::VersionFile do
           |      join('.')
           |    end
           |  end
+          |
+          |  # Custom code.
           |end
         EOS
       end
