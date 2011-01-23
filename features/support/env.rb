@@ -14,8 +14,8 @@ Before do
   @original_pwd = Dir.pwd
   Dir.chdir TMP
 
-  ENV['RUBYLIB'] = 'lib'
-  ENV['PATH'] = 'bin'
+  ENV['RUBYLIB'] = "#{ROOT}/lib"
+  ENV['PATH'] = "#{TMP}/bin"
   setup_path
 end
 
@@ -29,8 +29,10 @@ module RitualWorld
     FileUtils.mkdir_p 'bin'
     unstub_command 'bundle'
     unstub_command 'basename'
+    unstub_command 'cp'
     stub_command 'git'
     stub_command 'gem'
+    use_real_environment_for 'make'
   end
 
   def unstub_command(name)
@@ -47,6 +49,16 @@ module RitualWorld
 
   def stub_command(name)
     FileUtils.cp "#{ROOT}/features/support/capture", "bin/#{name}"
+    File.chmod 0755, "bin/#{name}"
+  end
+
+  def use_real_environment_for(name)
+    open("bin/#{name}", 'w') do |file|
+      file.puts <<-EOS.gsub(/^ *\|/, '')
+        |#!/bin/sh
+        |exec /usr/bin/env PATH="#{ORIGINAL_PATH}" #{name} "\$@"
+      EOS
+    end
     File.chmod 0755, "bin/#{name}"
   end
 

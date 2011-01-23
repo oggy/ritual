@@ -1,5 +1,6 @@
-Given /^I have a gem "(.*?)" at version "(.*?)"$/ do |name, version|
+Given /^I have a gem "(.*?)"(?: at version "(.*?)")?$/ do |name, version|
   @gem_name = name
+  version ||= '0.0.0'
   camelized_name = camelize(name)
 
   make_file 'Rakefile', ''
@@ -66,4 +67,9 @@ end
 
 Then /^"(.*?)" should contain:$/ do |file_name, content|
   File.read(file_name).chomp.should == content.chomp
+end
+
+Then /^"(.*?)" should exist$/ do |file_name|
+  file_name.gsub!(/DLEXT/, Config::CONFIG['DLEXT'])
+  File.should exist(file_name)
 end

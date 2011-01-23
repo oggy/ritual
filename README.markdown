@@ -43,6 +43,55 @@ a wrapper like Jeweler or Hoe.
 
 [using-gemspecs-as-intended]: http://yehudakatz.com/2010/04/02/using-gemspecs-as-intended
 
+## Extensions
+
+Use `extension` to define an extension-building task. Use one of two
+conventions.
+
+### Unnamed extensions
+
+If you only need a single extension, say if you're simply wrapping a C
+library, then use an unnamed extension. In your Rakefile, do:
+
+    extension
+
+This defines a task `ext` to build your extension. Source files live
+in `ext/`, and the extension is named after the gem.
+
+So if the gem is `my_gem`, then Ritual configures your extension with
+`ext/extconf.rb`, runs `make`, and installs `ext/my_gem.DLEXT` to
+`lib/my_gem/my_gem.DLEXT`. (`DLEXT` is the shared library extension,
+which varies from system to system.) `extconf.rb` should contain:
+
+    create_makefile "my_gem"
+
+And the extension entry point is `Init_my_gem`.
+
+### Named extensions
+
+If you need more than one extension, you better name them. Do:
+
+    extension :my_ext
+
+The task is named `ext:my_ext`. Source files live in
+`ext/my_ext/`. Ritual configures the extension with
+`ext/my_ext/extconf.rb`, and installs `ext/my_ext/my_gem.DLEXT` to
+`lib/my_gem/my_ext.DLEXT`. `extconf.rb`, should contain:
+
+    create_makefile "my_gem/my_ext"
+
+And the extension entry point is `Init_my_ext`.
+
+### Customizing
+
+Both `extension` calls above can take options:
+
+ * `:build_as` - The path of the shared library that gets built.
+ * `:install_as` - The path the shared library is installed to.
+
+Both are relative to the Rakefile's directory, and should omit the
+shared library extension.
+
 ## Note on Patches/Pull Requests
  
  * Bug reports: http://github.com/oggy/ritual/issues

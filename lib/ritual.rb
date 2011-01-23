@@ -73,6 +73,10 @@ def changelog
   @changelog ||= Ritual.changelog
 end
 
+def extensions
+  @extensions ||= []
+end
+
 def spec_task(*args, &block)
   require 'spec/rake/spectask'
   Spec::Rake::SpecTask.new(*args, &block)
@@ -98,6 +102,20 @@ end
 def replace_task(name, *args, &block)
   remove_task name
   task(name, *args, &block)
+end
+
+def extension(*args)
+  options = args.last.is_a?(Hash) ? args.pop : {}
+  args.size <= 1 or
+    raise ArgumentError, "wrong number of arguments (#{args.size} for 0..1, plus options)"
+  return if (gem = options[:gem]) && Ritual.library_name != gem.to_s
+
+  params = options.merge(:library_name => Ritual.library_name)
+  extension = Ritual::Extension.new(args.first, params)
+  extensions << extension
+  task extension.task_name do
+    extension.build
+  end
 end
 
 module Ritual

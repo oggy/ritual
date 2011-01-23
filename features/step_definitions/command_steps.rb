@@ -6,6 +6,7 @@ require 'shellwords'
 When /^I run "(.*)"$/ do |command|
   # Run through Ritual's bundler, so rake etc. can be found.
   @output = `BUNDLE_GEMFILE=#{ROOT}/Gemfile bundle exec #{command} 2>&1`
+  @output.gsub!(/\e\[(.*?)m/, '')  # remove terminal escapes
   $?.success? or
     raise "command failed: #{command}\nOutput:\n#{@output}"
 end
