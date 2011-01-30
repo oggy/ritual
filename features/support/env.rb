@@ -1,5 +1,5 @@
 require 'fileutils'
-require 'spec/expectations'
+require 'rspec/expectations'
 require 'ruby-debug'
 
 ROOT = File.dirname(File.dirname(File.dirname(__FILE__)))

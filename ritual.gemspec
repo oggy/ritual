@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   EOS
 
   s.add_dependency 'rake'
+  s.add_development_dependency 'rspec', '~> 2.0'
+  s.add_development_dependency 'cucumber'
   s.required_rubygems_version = ">= 1.3.6"
   s.files = Dir["lib/**/*"] + %w(LICENSE README.markdown Rakefile CHANGELOG)
   s.require_path = 'lib'

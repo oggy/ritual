@@ -5,7 +5,7 @@ TMP = "#{ROOT}/features/tmp"
 
 Dir['spec/support/*'].each { |path| require path }
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include Support::TimeTravel
   config.include Support::TemporaryDirectory
 
