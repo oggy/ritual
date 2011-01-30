@@ -1,11 +1,11 @@
 require 'spec/spec_helper'
 
-describe Ritual::Extension do
+describe Ritual::Extension::Base do
   DLEXT = Config::CONFIG['DLEXT']
 
   def extension(name, options={})
     params = options.merge(:library_name => 'LIBNAME')
-    Ritual::Extension.new(name, params)
+    Ritual::Extension::Standard.new(name, params)
   end
 
   describe "when unnamed" do

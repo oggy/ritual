@@ -30,6 +30,11 @@ module RitualWorld
     unstub_command 'bundle'
     unstub_command 'basename'
     unstub_command 'cp'
+    if RUBY_ENGINE == 'jruby'
+      unstub_command 'jruby'
+      unstub_command 'javac'
+      unstub_command 'jar'
+    end
     stub_command 'git'
     stub_command 'gem'
     use_real_environment_for 'make'

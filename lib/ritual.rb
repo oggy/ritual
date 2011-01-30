@@ -111,11 +111,10 @@ def extension(*args)
   return if (gem = options[:gem]) && Ritual.library_name != gem.to_s
 
   params = options.merge(:library_name => Ritual.library_name)
-  extension = Ritual::Extension.new(args.first, params)
+  klass = params[:type] == :jruby ? Ritual::Extension::JRuby : Ritual::Extension::Standard
+  extension = klass.new(args.first, params)
   extensions << extension
-  task extension.task_name do
-    extension.build
-  end
+  extension.define_task
 end
 
 module Ritual

@@ -1,4 +1,5 @@
 Feature: Extensions
+  @ext
   Scenario: Building an unnamed extension
     Given I have a gem "my_gem"
     And "Rakefile" contains:
@@ -36,6 +37,7 @@ Feature: Extensions
     When I run "rake ext"
     Then "lib/my_gem/my_gem.DLEXT" should exist
 
+  @ext
   Scenario: Building a named extension
     Given I have a gem "my_gem"
     And "Rakefile" contains:
@@ -72,3 +74,79 @@ Feature: Extensions
       """
     When I run "rake ext:my_ext"
     Then "lib/my_gem/my_ext.DLEXT" should exist
+
+  @jruby
+  Scenario: Building an unnamed JRuby extension
+    Given I have a gem "my_gem"
+    And "Rakefile" contains:
+      """
+      require 'ritual'
+      extension :type => :jruby
+      """
+    And "my_gem.gemspec" contains:
+      """
+      $:.unshift File.expand_path('lib', File.dirname(__FILE__))
+      require '#{name}/version'
+
+      Gem::Specification.new do |s|
+        s.name        = 'my_gem'
+        s.version     = MyGem::VERSION.to_s
+        s.summary     = "I'm just a test gem."
+        s.platform    = Gem::Platform::CURRENT
+      end
+      """
+    And "ext/MyGemService.java" contains:
+      """
+      package MyGem;
+      import org.jruby.Ruby;
+      import org.jruby.runtime.load.BasicLibraryService;
+
+      public class MyGemService implements BasicLibraryService {
+        public boolean basicLoad(Ruby runtime) {
+          return true;
+        }
+      }
+      """
+    When I run "rake ext"
+    Then "lib/my_gem/my_gem.jar" should exist
+
+    When I run "jar tf lib/my_gem/my_gem.jar"
+    Then it should output "MyGemService.class"
+
+  @jruby
+  Scenario: Building a named JRuby extension
+    Given I have a gem "my_gem"
+    And "Rakefile" contains:
+      """
+      require 'ritual'
+      extension :my_ext, :type => :jruby
+      """
+    And "my_gem.gemspec" contains:
+      """
+      $:.unshift File.expand_path('lib', File.dirname(__FILE__))
+      require '#{name}/version'
+
+      Gem::Specification.new do |s|
+        s.name        = 'my_gem'
+        s.version     = MyGem::VERSION.to_s
+        s.summary     = "I'm just a test gem."
+        s.platform    = Gem::Platform::CURRENT
+      end
+      """
+    And "ext/my_ext/MyExtService.java" contains:
+      """
+      package MyGem;
+      import org.jruby.Ruby;
+      import org.jruby.runtime.load.BasicLibraryService;
+
+      public class MyExtService implements BasicLibraryService {
+        public boolean basicLoad(Ruby runtime) {
+          return true;
+        }
+      }
+      """
+    When I run "rake ext:my_ext"
+    Then "lib/my_gem/my_ext.jar" should exist
+
+    When I run "jar tf lib/my_gem/my_ext.jar"
+    Then it should output "MyExtService.class"

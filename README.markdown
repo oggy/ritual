@@ -92,6 +92,17 @@ Both `extension` calls above can take options:
 Both are relative to the Rakefile's directory, and should omit the
 shared library extension.
 
+### JRuby extensions
+
+JRuby doesn't support extensions in the traditional sense (using
+`mkmf`). Instead, you typically build a `.jar` which is packaged into
+the gem.
+
+To build a JRuby extension, pass `:type => :jruby` to
+`extension`. JRuby extensions can be named or unnamed, as above. All
+`.java` files are fed to `javac` simultanously to build the `.jar`,
+which is bundled into the gem by `gem:build`.
+
 ## Note on Patches/Pull Requests
  
  * Bug reports: http://github.com/oggy/ritual/issues
