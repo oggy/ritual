@@ -113,4 +113,4 @@ which is bundled into the gem by `gem:build`.
 
 ## Copyright
 
-Copyright (c) 2010 George Ogata. See LICENSE for details.
+Copyright (c) George Ogata. See LICENSE for details.
