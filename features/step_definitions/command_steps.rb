@@ -24,7 +24,7 @@ end
 
 Then /^it should run exactly:/ do |commands|
   # Massage quotes out of commands, as we can't test these.
-  commands = commands.map do |command|
+  commands = commands.split(/$/).map do |command|
     words = Shellwords.shellwords(command)
     words.join(' ') << "\n"
   end.join
