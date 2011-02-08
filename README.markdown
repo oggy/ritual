@@ -1,42 +1,44 @@
 # Ritual
 
-Adds tasks and helpers to your Rakefile to manage releases.
+Sweet, simple Rakefiles for your gem.
 
-Much more lightweight than [Jeweler][jeweler] or [Newgem][newgem]. Way less
-flexible, as it's only geared towards my workflow so far.
+Picks up where Bundler leaves off, reducing the entire release ritual
+to a single command.
 
-Like the idea? Feel free to fork and send patches!
+## Example
 
-[jeweler]: http://github.com/technicalpickles/jeweler
-[newgem]: http://github.com/drnic/newgem
+For a plain ruby gem (no extensions), this is usually enough for your
+`Rakefile`:
 
-## Usage
-
-In `Rakefile`:
-
-    gem 'ritual'
     require 'ritual'
 
-Adds some shortcuts:
+To release a new patch version of your gem:
 
- * `cucumber_task(*args, &block)`: Define a Cucumber task. Noop if
-   Cucumber cannot be loaded.
- * `spec_task(*args, &block)`: Define an RSpec task. Noop if RSpec
-   cannot be loaded.
- * `rdoc_task(*args, &block)`: Define an rdoc task.
+    rake patch release
 
-And some tasks:
+The `release` task just runs these tasks:
 
- * `rake major release` 
- * `rake minor release` 
- * `rake patch release` 
-   * Perform the release ritual:
-     * Bump the major/minor/patch version. This is defined in
-       `lib/<library-name>/version.rb.`
-     * Tag the release in git.
-     * Push the git repo to origin.
-     * Build the gem from the gemspec.
-     * Push the gem to Gemcutter.
+    rake repo:bump    # Bump and commit the version file and changelog.
+    rake repo:tag     # Tag the release with the current version.
+    rake repo:push    # Push updates upstream.
+    rake gem:build    # Build the gem.
+    rake gem:push     # Push the gem to the gem server.
+
+Select which component to bump with one of these:
+
+    rake patch        # Select a patch version bump.
+    rake minor        # Select a minor version bump.
+    rake major        # Select a major version bump.
+
+For example:
+
+ * `rake patch release` will bump 1.2.3 to 1.2.4 and release.
+ * `rake minor release` will bump 1.2.3 to 1.3.0 and release.
+ * `rake major release` will bump 1.2.3 to 2.0.0 and release.
+
+"Release early, release often" has never been so easy!
+
+## Gemspec
 
 You [maintain the gemspec directly][using-gemspecs-as-intended], rather than via
 a wrapper like Jeweler or Hoe.
