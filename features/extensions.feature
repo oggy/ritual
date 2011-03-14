@@ -37,6 +37,19 @@ Feature: Extensions
     When I run "rake ext"
     Then "lib/my_gem/my_gem.DLEXT" should exist
 
+    When I run "rake clobber"
+    Then the remaining files should be:
+      """
+      CHANGELOG
+      Gemfile
+      Rakefile
+      my_gem.gemspec
+      ext/extconf.rb
+      ext/my_gem.c
+      lib/my_gem.rb
+      lib/my_gem/version.rb
+      """
+
   @ext
   Scenario: Building a named extension
     Given I have a gem "my_gem"
@@ -74,6 +87,19 @@ Feature: Extensions
       """
     When I run "rake ext:my_ext"
     Then "lib/my_gem/my_ext.DLEXT" should exist
+
+    When I run "rake clobber"
+    Then the remaining files should be:
+      """
+      CHANGELOG
+      Gemfile
+      Rakefile
+      my_gem.gemspec
+      ext/my_ext/extconf.rb
+      ext/my_ext/my_gem.c
+      lib/my_gem.rb
+      lib/my_gem/version.rb
+      """
 
   @jruby
   Scenario: Building an unnamed JRuby extension
@@ -113,6 +139,18 @@ Feature: Extensions
     When I run "jar tf lib/my_gem/my_gem.jar"
     Then it should output "MyGemService.class"
 
+    When I run "rake clobber"
+    Then the remaining files should be:
+      """
+      CHANGELOG
+      Gemfile
+      Rakefile
+      my_gem.gemspec
+      ext/MyGemService.java
+      lib/my_gem.rb
+      lib/my_gem/version.rb
+      """
+
   @jruby
   Scenario: Building a named JRuby extension
     Given I have a gem "my_gem"
@@ -150,3 +188,15 @@ Feature: Extensions
 
     When I run "jar tf lib/my_gem/my_ext.jar"
     Then it should output "MyExtService.class"
+
+    When I run "rake clobber"
+    Then the remaining files should be:
+      """
+      CHANGELOG
+      Gemfile
+      Rakefile
+      my_gem.gemspec
+      ext/my_ext/MyExtService.java
+      lib/my_gem.rb
+      lib/my_gem/version.rb
+      """

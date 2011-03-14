@@ -25,6 +25,7 @@ module Ritual
         end
 
         CLEAN.include(compiled_paths)
+        CLEAN.include(@build_path)
         CLOBBER.include(@install_path)
       end
 

@@ -1,7 +1,7 @@
 module Ritual
   module Extension
     class JRuby < Base
-      def define_task
+      def define_tasks
         task 'gem:build' => task_name
         desc "Build the #{name} extension."
         task task_name do

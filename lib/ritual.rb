@@ -114,7 +114,7 @@ def extension(*args)
   klass = params[:type] == :jruby ? Ritual::Extension::JRuby : Ritual::Extension::Standard
   extension = klass.new(args.first, params)
   extensions << extension
-  extension.define_task
+  extension.define_tasks
 end
 
 module Ritual
