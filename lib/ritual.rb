@@ -78,9 +78,14 @@ def extensions
 end
 
 def spec_task(*args, &block)
-  require 'spec/rake/spectask'
-  Spec::Rake::SpecTask.new(*args, &block)
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(&block)
 rescue LoadError
+  begin
+    require 'rspec/rake/spectask'
+    Spec::Rake::SpecTask.new(*args, &block)
+  rescue LoadError
+  end
 end
 
 def cucumber_task(*args, &block)
