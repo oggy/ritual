@@ -1,5 +1,6 @@
 == LATEST
 
+ * Push tag when releasing.
  * Update spec_task for RSpec 2.
 
 == 0.2.0 2011-02-08

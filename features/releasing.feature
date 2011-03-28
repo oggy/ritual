@@ -13,7 +13,7 @@ Feature: Releasing
       git add lib/my_gem/version.rb CHANGELOG
       git commit lib/my_gem/version.rb CHANGELOG -m 'Bump to version 1.2.4.'
       git tag v1.2.4
-      git push origin master
+      git push origin master tags/v1.2.4
       gem build my_gem.gemspec
       gem push my_gem-1.2.4.gem
       """

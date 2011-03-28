@@ -40,7 +40,7 @@ namespace :repo do
 
   desc "Push updates upstream."
   task :push do
-    sh "git push origin master"
+    sh "git push origin master tags/v#{version}"
   end
 end
 
