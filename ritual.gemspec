@@ -19,6 +19,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 2.0'
   s.add_development_dependency 'cucumber'
+  if RUBY_ENGINE == 'ruby' && RUBY_VERSION >= '1.9'
+    s.add_development_dependency 'ruby-debug19'
+  else
+    s.add_development_dependency 'ruby-debug'
+  end
   s.required_rubygems_version = ">= 1.3.6"
   s.files = Dir["lib/**/*"] + %w(LICENSE README.markdown Rakefile CHANGELOG)
   s.require_path = 'lib'

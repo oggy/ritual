@@ -1,3 +1,1 @@
 gemspec
-
-gem 'ruby-debug'
