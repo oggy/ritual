@@ -3,6 +3,10 @@
  * Push tag when releasing.
  * Update spec_task for RSpec 2.
 
+== 0.2.1 2011-03-15
+
+ * Clean intermediate extension files correctly.
+
 == 0.2.0 2011-02-08
 
  * Extension support.

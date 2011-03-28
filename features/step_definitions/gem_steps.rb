@@ -73,3 +73,13 @@ Then /^"(.*?)" should exist$/ do |file_name|
   file_name.gsub!(/DLEXT/, Config::CONFIG['DLEXT'])
   File.should exist(file_name)
 end
+
+Then /^the remaining files should be:$/ do |paths_string|
+  paths = Set[]
+  paths_string.each_line do |line|
+    paths << line.strip
+  end
+  # bin contains symlinks to unstubbed commands.
+  actual_paths = Dir['**/*'].reject{|path| File.directory?(path) || path =~ /\Abin\//}
+  actual_paths.sort.should == paths.sort
+end
