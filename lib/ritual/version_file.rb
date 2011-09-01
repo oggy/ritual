@@ -50,8 +50,9 @@ module Ritual
 
     def read
       if File.exist?(path)
-        File.read(path) =~ VERSION_REGEXP and
-          eval $1
+        File.read(path) =~ VERSION_REGEXP or
+          raise Error, "invalid version file: #{path}"
+        eval $1
       else
         [0, 0, 0]
       end

@@ -49,6 +49,11 @@ Given /^"(.*?)" contains:$/ do |file_name, content|
   make_file file_name, content
 end
 
+Given /^the version file "(.*?)" is invalid$/ do |file_name|
+  source = File.read(file_name).gsub(/VERSION/, 'INVALID')
+  open(file_name, 'w') { |f| f.puts source }
+end
+
 Then /^the version should be "(.*?)"$/ do |version|
   version_file = "lib/#{@gem_name}/version.rb"
   eval "module TEMP_CONTEXT\n#{File.read(version_file)}\nend", nil, version_file, 0

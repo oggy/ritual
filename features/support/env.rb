@@ -34,6 +34,8 @@ module RitualWorld
       unstub_command 'jruby'
       unstub_command 'javac'
       unstub_command 'jar'
+    else
+      unstub_command 'ruby'
     end
     stub_command 'git'
     stub_command 'gem'

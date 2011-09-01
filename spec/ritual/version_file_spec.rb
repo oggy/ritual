@@ -127,4 +127,16 @@ describe Ritual::VersionFile do
       end
     end
   end
+
+  describe "when the version file is invalid" do
+    before do
+      open("#{TMP}/version.rb", 'w') { |f| f.puts "INVALID" }
+    end
+
+    it "should raise a Ritual::Error when instantiating" do
+      lambda do
+        Ritual::VersionFile.new("#{TMP}/version.rb", 'MyGem')
+      end.should raise_error(Ritual::Error)
+    end
+  end
 end

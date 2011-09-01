@@ -34,3 +34,9 @@ Feature: Releasing
     And it should not run any commands
     And the version should be "1.2.3"
     And the latest changelog version should be "1.2.3"
+
+  Scenario: The version file is invalid
+    When the version file "lib/my_gem/version.rb" is invalid
+    And I try to run "rake patch release"
+    Then it should output "invalid version file: lib/my_gem/version.rb"
+    And it should not run any commands
