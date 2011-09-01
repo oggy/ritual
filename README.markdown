@@ -45,6 +45,30 @@ a wrapper like Jeweler or Hoe.
 
 [using-gemspecs-as-intended]: http://yehudakatz.com/2010/04/02/using-gemspecs-as-intended
 
+## Version File
+
+The version file lives at `lib/gem_name/version.rb` (`gem_name`
+matches the name of the gemspec). It contains a line that looks like:
+
+    VERSION = [1, 2, 3]
+
+When bumping the version, Ritual will only alter this line in the
+file. You may have any custom code around this line.
+
+## Changelog
+
+The changelog lives at `CHANGELOG`. When bumping the version, it will
+look for a line like:
+
+    == LATEST
+
+And replace it with the new version and current date:
+
+    == 1.2.3 2011-09-01
+
+If it can't find this line, the version bump will fail. This prevents
+you from releasing without a changelog update.
+
 ## Extensions
 
 Use `extension` to define an extension-building task. Use one of two
