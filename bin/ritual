@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+require 'ritual/version'
+ROOT = File.expand_path('..', File.dirname(__FILE__))
+
+module Ritual
+  class CLI < Thor
+    include Thor::Actions
+
+    desc "new GEMNAME", "Create a new gem in a subdirectory."
+    def new(name)
+      File.exist?(name) and
+        abort "file exists: #{name}"
+      empty_directory name
+      self.destination_root = name
+      Dir.chdir name do
+        apply
+        system 'git', 'init'
+        system 'git', 'add', '.'
+        system 'git', 'commit', '-m', 'New gem.'
+      end
+    end
+
+    desc "apply", "Ritualize the gem in the current directory."
+    def apply
+      template "#{ROOT}/templates/Gemfile", "Gemfile"
+      template "#{ROOT}/templates/Rakefile", "Rakefile"
+      template "#{ROOT}/templates/CHANGELOG", "CHANGELOG"
+      template "#{ROOT}/templates/README.markdown", "README.markdown"
+      template "#{ROOT}/templates/LICENSE", "LICENSE"
+      template "#{ROOT}/templates/lib.rb", "lib/#{gem_name}.rb"
+      template "#{ROOT}/templates/version.rb", "lib/#{gem_name}/version.rb"
+      template "#{ROOT}/templates/gemspec.rb", "#{gem_name}.gemspec"
+    end
+
+    source_root "#{ROOT}/templates"
+
+    private
+
+    def gem_name
+      @gem_name ||= File.basename(Dir.pwd)
+    end
+
+    def namespace
+      @namespace ||= gem_name.gsub(/(?:\A|(.)_)(.)/) {$1.to_s + $2.upcase}
+    end
+
+    def human_name
+      @human_name ||= gem_name.gsub(/(?:\A|(.)_)(.)/) {"#$1 " + $2.upcase}.lstrip
+    end
+
+    def author
+      @author ||= ENV['RITUAL_AUTHOR'] || `git config user.name`.strip
+    end
+
+    def email
+      @email ||= ENV['RITUAL_EMAIL'] || `git config user.email`.strip
+    end
+
+    def ritual_version
+      @ritual_version ||= ENV['RITUAL_VERSION'] || Ritual::VERSION
+    end
+  end
+end
+
+Ritual::CLI.start(ARGV)

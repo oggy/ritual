@@ -15,7 +15,10 @@ Before do
   Dir.chdir TMP
 
   ENV['RUBYLIB'] = "#{ROOT}/lib"
-  ENV['PATH'] = "#{TMP}/bin"
+  ENV['PATH'] = "#{ROOT}/bin:#{TMP}/bin"
+  ENV['RITUAL_AUTHOR'] = "AUTHOR"
+  ENV['RITUAL_EMAIL'] = "EMAIL"
+  ENV['RITUAL_VERSION'] = "VERSION"
   setup_path
 end
 
