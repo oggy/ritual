@@ -85,6 +85,8 @@ rescue LoadError
     require 'rspec/rake/spectask'
     Spec::Rake::SpecTask.new(*args, &block)
   rescue LoadError
+    require 'spec/rake/spectask'
+    Spec::Rake::SpecTask.new(*args, &block)
   end
 end
 
