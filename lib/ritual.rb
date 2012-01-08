@@ -79,7 +79,7 @@ end
 
 def spec_task(*args, &block)
   require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(&block)
+  RSpec::Core::RakeTask.new(*args, &block)
 rescue LoadError
   begin
     require 'rspec/rake/spectask'
