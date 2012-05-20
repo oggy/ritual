@@ -75,7 +75,8 @@ Then /^"(.*?)" should contain:$/ do |file_name, content|
 end
 
 Then /^"(.*?)" should exist$/ do |file_name|
-  file_name.gsub!(/DLEXT/, Config::CONFIG['DLEXT'])
+  rb_config = defined?(RbConfig) ? RbConfig : Config
+  file_name.gsub!(/DLEXT/, rb_config::CONFIG['DLEXT'])
   File.should exist(file_name)
 end
 

@@ -1,7 +1,8 @@
 require 'spec/spec_helper'
 
 describe Ritual::Extension::Base do
-  DLEXT = Config::CONFIG['DLEXT']
+  RbConfig = defined?(RbConfig) ? RbConfig : Config
+  DLEXT = RbConfig::CONFIG['DLEXT']
 
   def extension(name, options={})
     params = options.merge(:library_name => 'LIBNAME')

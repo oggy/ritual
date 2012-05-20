@@ -1,7 +1,8 @@
 module Ritual
   module Extension
     class Base
-      DLEXT = Config::CONFIG['DLEXT']
+      RbConfig = defined?(RbConfig) ? RbConfig : Config
+      DLEXT = RbConfig::CONFIG['DLEXT']
 
       def initialize(name, params={})
         @name = name ? name.to_sym : nil

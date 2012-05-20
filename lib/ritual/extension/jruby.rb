@@ -7,7 +7,7 @@ module Ritual
         task task_name do
           relative_install_path = relative_path(install_path)
           relative_compiled_paths = compiled_paths.map { |p| relative_path(p) }
-          class_path = "#{Config::CONFIG['prefix']}/lib/jruby.jar"
+          class_path = "#{RbConfig::CONFIG['prefix']}/lib/jruby.jar"
 
           sh 'javac', '-g', '-classpath', class_path, *source_paths
           Dir.chdir path do
