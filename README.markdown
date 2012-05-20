@@ -89,7 +89,7 @@ So if the gem is `my_gem`, then Ritual configures your extension with
 `lib/my_gem/my_gem.DLEXT`. (`DLEXT` is the shared library extension,
 which varies from system to system.) `extconf.rb` should contain:
 
-    create_makefile "my_gem"
+    create_makefile "my_gem/my_gem"
 
 And the extension entry point is `Init_my_gem`.
 
