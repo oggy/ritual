@@ -1,4 +1,4 @@
-== LATEST
+== 0.4.1 2012-05-20
 
  * Fix building JRuby extensions in 1.9 mode.
  * Silence Rake warnings when using extensions.
