@@ -86,6 +86,6 @@ Then /^the remaining files should be:$/ do |paths_string|
     paths << line.strip
   end
   # bin contains symlinks to unstubbed commands.
-  actual_paths = Dir['**/*'].reject{|path| File.directory?(path) || path =~ /\Abin\//}
+  actual_paths = Dir['**/*'].reject{|path| File.directory?(path) || path =~ /\Abin\/|\.rbc\z/}
   actual_paths.sort.should == paths.sort
 end
