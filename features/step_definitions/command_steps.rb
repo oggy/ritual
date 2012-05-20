@@ -23,8 +23,7 @@ Then /^it should output "(.*?)"$/ do |output|
 end
 
 Then /^it should run exactly:/ do |commands|
-  # Massage quotes out of commands, as we can't test these.
-  commands = commands.split(/$/).map do |command|
+  commands = commands.split(/\n/).map do |command|
     words = Shellwords.shellwords(command)
     words.join(' ') << "\n"
   end.join
