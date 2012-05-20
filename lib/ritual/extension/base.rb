@@ -4,6 +4,8 @@ module Ritual
       RbConfig = defined?(RbConfig) ? RbConfig : Config
       DLEXT = RbConfig::CONFIG['DLEXT']
 
+      include Rake::DSL
+
       def initialize(name, params={})
         @name = name ? name.to_sym : nil
         library_name = params[:library_name]
