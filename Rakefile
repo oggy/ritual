@@ -2,7 +2,7 @@ $:.unshift File.expand_path('lib', File.dirname(__FILE__))
 require 'ritual'
 
 task :default do
-  sh 'bundle exec rspec spec'
+  sh 'bundle exec rspec -I. spec'
 
   if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
     sh 'bundle exec cucumber --tags=~@ext'
