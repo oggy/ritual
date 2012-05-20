@@ -33,10 +33,13 @@ module RitualWorld
     unstub_command 'bundle'
     unstub_command 'basename'
     unstub_command 'cp'
-    if RUBY_PLATFORM == 'java'
+    case (RUBY_ENGINE rescue nil)
+    when 'jruby'
       unstub_command 'jruby'
       unstub_command 'javac'
       unstub_command 'jar'
+    when 'rbx'
+      unstub_command 'rbx'
     else
       unstub_command 'ruby'
     end
