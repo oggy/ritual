@@ -1,13 +1,10 @@
 require 'fileutils'
 require 'rspec/expectations'
-require 'ruby-debug'
 
 ROOT = File.dirname(File.dirname(File.dirname(__FILE__)))
 TMP = "#{ROOT}/features/tmp"
 
 ORIGINAL_PATH = ENV['PATH']
-
-Debugger.start
 
 Before do
   FileUtils.mkdir_p(TMP)
