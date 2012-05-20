@@ -12,7 +12,7 @@ module Ritual
           sh 'javac', '-g', '-classpath', class_path, *source_paths
           Dir.chdir path do
             mkdir_p File.dirname(relative_install_path)
-            sh 'jar', 'cf', relative_install_path, *relative_compiled_paths
+            sh 'jar', 'cf', relative_install_path.to_s, *relative_compiled_paths.map(&:to_s)
           end
         end
       end
