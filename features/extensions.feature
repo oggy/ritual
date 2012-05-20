@@ -112,7 +112,7 @@ Feature: Extensions
     And "my_gem.gemspec" contains:
       """
       $:.unshift File.expand_path('lib', File.dirname(__FILE__))
-      require '#{name}/version'
+      require 'my_gem/version'
 
       Gem::Specification.new do |s|
         s.name        = 'my_gem'
