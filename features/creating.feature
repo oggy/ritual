@@ -2,6 +2,10 @@ Feature: Creating
 
   Scenario: Creating a new gem
     When I run "ritual new my_gem"
+    Then "my_gem/.gitignore" should contain:
+      """
+      /Gemfile.lock
+      """
     Then "my_gem/Gemfile" should contain:
       """
       source :rubygems

@@ -24,6 +24,7 @@ module Ritual
 
     desc "apply", "Ritualize the gem in the current directory."
     def apply
+      template "#{ROOT}/templates/gitignore", ".gitignore"
       template "#{ROOT}/templates/Gemfile", "Gemfile"
       template "#{ROOT}/templates/Rakefile", "Rakefile"
       template "#{ROOT}/templates/CHANGELOG", "CHANGELOG"
