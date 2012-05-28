@@ -39,7 +39,7 @@ module RitualWorld
       unstub_command 'rbx'
     when 'ruby'
       unstub_command 'ruby'
-      unstub_command 'ruby_noexec_wrapper', optional: true
+      unstub_command 'ruby_noexec_wrapper', :optional => true
     else
       unstub_command 'ruby'
     end
