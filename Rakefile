@@ -1,7 +1,7 @@
 $:.unshift File.expand_path('lib', File.dirname(__FILE__))
 require 'ritual'
 
-task :default do
+task :ci do
   sh 'bundle exec rspec -I. spec'
 
   if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
