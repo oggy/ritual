@@ -37,12 +37,11 @@ module RitualWorld
       unstub_command 'jar'
     when 'rbx'
       unstub_command 'rbx'
-    when 'ruby'
       unstub_command 'ruby'
-      unstub_command 'ruby_noexec_wrapper', :optional => true
     else
       unstub_command 'ruby'
     end
+    unstub_command 'ruby_noexec_wrapper', :optional => true
     stub_command 'git'
     stub_command 'gem'
     use_real_environment_for 'make'
