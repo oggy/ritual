@@ -39,7 +39,7 @@ module RitualWorld
       unstub_command 'rbx'
     when 'ruby'
       unstub_command 'ruby'
-      unstub_command 'ruby_noexec_wrapper' if RUBY_VERSION >= '1.9.3'
+      unstub_command 'ruby_noexec_wrapper', optional: true
     else
       unstub_command 'ruby'
     end
@@ -48,7 +48,7 @@ module RitualWorld
     use_real_environment_for 'make'
   end
 
-  def unstub_command(name)
+  def unstub_command(name, options={})
     ORIGINAL_PATH.split(/:/).each do |dir|
       next if dir.strip.empty?
       path = "#{dir}/#{name}"
@@ -57,7 +57,9 @@ module RitualWorld
         return
       end
     end
-    raise "cannot find `#{name}' command - ensure it's in your PATH and try again"
+    unless options[:optional]
+      raise "cannot find `#{name}' command - ensure it's in your PATH and try again"
+    end
   end
 
   def stub_command(name)
