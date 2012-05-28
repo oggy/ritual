@@ -37,6 +37,9 @@ module RitualWorld
       unstub_command 'jar'
     when 'rbx'
       unstub_command 'rbx'
+    when 'ruby'
+      unstub_command 'ruby'
+      unstub_command 'ruby_noexec_wrapper' if RUBY_VERSION >= '1.9.3'
     else
       unstub_command 'ruby'
     end
