@@ -79,6 +79,7 @@ Feature: Creating
         gem.version       = MyGem::VERSION
         gem.authors       = ['AUTHOR']
         gem.email         = ['EMAIL']
+        gem.license       = 'MIT'
         gem.description   = "TODO: Write a gem description"
         gem.summary       = "TODO: Write a gem summary"
         gem.homepage      = ''

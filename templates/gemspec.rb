@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.version       = <%= namespace %>::VERSION
   gem.authors       = ['<%= author %>']
   gem.email         = ['<%= email %>']
+  gem.license       = 'MIT'
   gem.description   = "TODO: Write a gem description"
   gem.summary       = "TODO: Write a gem summary"
   gem.homepage      = ''
