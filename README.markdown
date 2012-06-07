@@ -38,6 +38,16 @@ For example:
 
 "Release early, release often" has never been so easy!
 
+## Getting Started
+
+Got an existing project?
+
+    ritual apply
+
+Starting a new one?
+
+    ritual new GEM-NAME
+
 ## Gemspec
 
 You [maintain the gemspec directly][using-gemspecs-as-intended], rather than via
