@@ -43,6 +43,7 @@ module RitualWorld
       unstub_command 'ruby'
     end
     unstub_command 'ruby_noexec_wrapper', :optional => true
+    unstub_command 'ruby_executable_hooks'
     stub_command 'git'
     stub_command 'gem'
     use_real_environment_for 'make'
