@@ -1,17 +1,8 @@
-source :rubygems
+source 'https://rubygems.org/'
 gemspec
 
 group :dev do
-  case (RUBY_ENGINE rescue nil)
-  when 'jruby'
-    gem 'ruby-debug'
-  when 'rbx'
-    # Debugger is built-in.
-  else
-    if RUBY_VERSION >= '1.9'
-      gem 'debugger', :require => 'ruby-debug'
-    else
-      gem 'ruby-debug'
-    end
-  end
+  gem 'ruby-debug', platform: :jruby
+  gem 'debugger', platform: :ruby_19
+  gem 'byebug', platform: :ruby_20
 end
