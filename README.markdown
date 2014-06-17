@@ -1,4 +1,4 @@
-# Ritual
+# Ritual [![Build Status](https://travis-ci.org/oggy/ritual.png?branch=master)](https://travis-ci.org/oggy/ritual)
 
 Sweet, simple Rakefiles for your gem.
 
