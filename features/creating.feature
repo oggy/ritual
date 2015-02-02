@@ -8,8 +8,10 @@ Feature: Creating
       """
     Then "my_gem/Gemfile" should contain:
       """
-      source :rubygems
+      source 'https://rubygems.org/'
       gemspec
+
+      gem 'ritual'
       """
     And "my_gem/Rakefile" should contain:
       """
@@ -70,7 +72,6 @@ Feature: Creating
       """
     And "my_gem/my_gem.gemspec" should contain:
       """
-      # -*- encoding: utf-8 -*-
       $:.unshift File.expand_path('lib', File.dirname(__FILE__))
       require 'my_gem/version'
 
@@ -87,7 +88,5 @@ Feature: Creating
         gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
         gem.files         = `git ls-files`.split("\n")
         gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-
-        gem.add_development_dependency 'ritual', '~> VERSION'
       end
       """
