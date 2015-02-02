@@ -1,9 +1,10 @@
-require 'ritual/lib'
-
 ROOT = File.dirname(File.dirname(__FILE__))
 TMP = "#{ROOT}/features/tmp"
 
-Dir['spec/support/*'].each { |path| require path }
+$:.unshift "#{ROOT}/lib"
+require 'ritual/lib'
+
+Dir["#{ROOT}/spec/support/*"].each { |path| require path }
 
 RSpec.configure do |config|
   config.include Support::TimeTravel

@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require_relative '../spec_helper'
 
 describe Ritual::VersionFile do
   describe "when the version file does not exist" do
