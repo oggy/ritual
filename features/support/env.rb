@@ -37,9 +37,6 @@ module RitualWorld
       unstub_command 'javac'
       unstub_command 'jar'
       unstub_command 'ruby'
-    when 'rbx'
-      unstub_command 'rbx'
-      unstub_command 'ruby'
     else
       unstub_command 'ruby'
     end
