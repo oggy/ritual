@@ -17,8 +17,8 @@ module Support
         raise ArgumentError, "time must be String, Time, or Date: #{time.inspect}"
       end
 
-      Time.stub!(:now).and_return(time)
-      Date.stub!(:today).and_return(date)
+      Time.stub(:now).and_return(time)
+      Date.stub(:today).and_return(date)
     end
 
     def stop_time
