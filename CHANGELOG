@@ -1,4 +1,4 @@
-== LATEST
+== 0.5.0 2022-04-22
 
  * Support whitespace before LATEST title.
  * Require date library in generated gemspecs.
