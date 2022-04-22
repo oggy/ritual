@@ -30,6 +30,7 @@ module RitualWorld
     unstub_command 'bundle'
     unstub_command 'basename'
     unstub_command 'cp'
+    unstub_command 'rake'
     case (RUBY_ENGINE rescue nil)
     when 'jruby'
       unstub_command 'jruby'
