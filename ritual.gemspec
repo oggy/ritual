@@ -1,4 +1,7 @@
 # -*- encoding: utf-8 -*-
+
+require 'date'
+
 $:.unshift File.expand_path('lib', File.dirname(__FILE__))
 require 'ritual/version'
 
