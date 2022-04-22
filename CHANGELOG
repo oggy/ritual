@@ -1,5 +1,6 @@
 == LATEST
 
+ * Support whitespace before LATEST title.
  * Gitignore gem lock in new projects.
 
 == 0.4.1 2012-05-20
