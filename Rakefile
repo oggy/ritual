@@ -5,8 +5,8 @@ task :ci do
   sh 'bundle exec rspec -I. spec'
 
   if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'jruby'
-    sh 'bundle exec cucumber --tags=~@ext'
+    sh "bundle exec cucumber --tags='not @ext'"
   else
-    sh 'bundle exec cucumber --tags=~@jruby'
+    sh "bundle exec cucumber --tags='not @jruby'"
   end
 end
