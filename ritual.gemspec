@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rake'
   s.add_runtime_dependency 'thor'
-  s.add_development_dependency 'rspec', '~> 2.0'
+  s.add_development_dependency 'rspec'
   s.add_development_dependency 'cucumber'
   s.required_rubygems_version = ">= 1.3.6"
   s.files = Dir["{lib,templates}/**/*"] + %w(LICENSE README.markdown Rakefile CHANGELOG)
