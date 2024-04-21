@@ -1,3 +1,7 @@
+== LATEST
+
+ * Remove period from git subject line in "ritual new".
+
 == 0.5.0 2022-04-22
 
  * Support whitespace before LATEST title.
